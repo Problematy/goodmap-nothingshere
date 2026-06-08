@@ -1,0 +1,9 @@
+{
+  "packages": {
+    ".": {
+      "release-type": "python",
+      "package-name": "goodmap-nothingshere",
+      "include-component-in-tag": false
+    }
+  }
+}

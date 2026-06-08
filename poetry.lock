@@ -1025,38 +1025,36 @@ files = [
 
 [[package]]
 name = "goodmap"
-version = "1.7.0"
+version = "1.8.0"
 description = "Map engine to serve all the people :)"
 optional = false
-python-versions = "^3.10"
+python-versions = "<4.0,>=3.10"
 groups = ["main"]
-files = []
-develop = false
+files = [
+    {file = "goodmap-1.8.0-py3-none-any.whl", hash = "sha256:6aa09cca3601a8555a84828a2bc72ac4edb2807e71149c32fe028509ea2ef2e4"},
+    {file = "goodmap-1.8.0.tar.gz", hash = "sha256:703f2c2a23d10fc406f7f0ebfd1de0030b9bd94db4dcbf385602aa240cd3fe30"},
+]
 
 [package.dependencies]
-aiohttp = "^3.8.4"
-Babel = "^2.10.3"
-deprecation = "^2.1.0"
-Flask-Babel = "^4.0.0"
-Flask-WTF = "^1.2.1"
-google-cloud-storage = "^2.7.0"
-gql = "^3.4.0"
+aiohttp = ">=3.8.4,<4.0.0"
+Babel = ">=2.10.3,<3.0.0"
+deprecation = ">=2.1.0,<3.0.0"
+Flask-Babel = ">=4.0.0,<5.0.0"
+Flask-WTF = ">=1.2.1,<2.0.0"
+google-cloud-storage = ">=2.7.0,<3.0.0"
+gql = ">=3.4.0,<4.0.0"
 gunicorn = ">=20.1,<26.0"
-humanize = "^4.6.0"
-numpy = "^2.2.0"
+humanize = ">=4.6.0,<5.0.0"
+numpy = ">=2.2.0,<3.0.0"
 platzky = "2.0.0a2"
-pydantic = "^2.12.0"
-pysupercluster-problematy = "^0.7.8"
-PyYAML = "^6.0"
-scipy = "^1.15.1"
-spectree = "^2.0.1"
+pydantic = ">=2.12.0,<3.0.0"
+pysupercluster-problematy = ">=0.7.8,<0.8.0"
+PyYAML = ">=6.0,<7.0"
+scipy = ">=1.15.1,<2.0.0"
+spectree = ">=2.0.1,<3.0.0"
 
 [package.extras]
 docs = ["myst-parser (>=4.0.0,<5.0.0)", "sphinx (>=8.0.0,<9.0.0)", "sphinx-rtd-theme (>=3.0.0,<4.0.0)"]
-
-[package.source]
-type = "directory"
-url = "../../goodmap"
 
 [[package]]
 name = "google-api-core"
@@ -3334,4 +3332,4 @@ propcache = ">=0.2.1"
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.14"
-content-hash = "e120f79e0b311376164af2df473fac0d093d9e25fda6d93f1912583c67122e82"
+content-hash = "979632b566543cd62f3d8263284bffbc6366c254602b2e342e0015eead1c1940"

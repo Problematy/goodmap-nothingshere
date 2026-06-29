@@ -1025,38 +1025,36 @@ files = [
 
 [[package]]
 name = "goodmap"
-version = "1.7.0"
+version = "2.0.0a1"
 description = "Map engine to serve all the people :)"
 optional = false
-python-versions = "^3.10"
+python-versions = "<4.0,>=3.10"
 groups = ["main"]
-files = []
-develop = false
+files = [
+    {file = "goodmap-2.0.0a1-py3-none-any.whl", hash = "sha256:7a493905e424d9d72687a1caab645a2d6febc4c32ae4a9cc931fe5def0c857f7"},
+    {file = "goodmap-2.0.0a1.tar.gz", hash = "sha256:e7fa6580d9dbc00727cafae26cf4494c077924404fc35403c76b4787a56525b8"},
+]
 
 [package.dependencies]
-aiohttp = "^3.8.4"
-Babel = "^2.10.3"
-deprecation = "^2.1.0"
-Flask-Babel = "^4.0.0"
-Flask-WTF = "^1.2.1"
-google-cloud-storage = "^2.7.0"
-gql = "^3.4.0"
+aiohttp = ">=3.8.4,<4.0.0"
+Babel = ">=2.10.3,<3.0.0"
+deprecation = ">=2.1.0,<3.0.0"
+Flask-Babel = ">=4.0.0,<5.0.0"
+Flask-WTF = ">=1.2.1,<2.0.0"
+google-cloud-storage = ">=2.7.0,<3.0.0"
+gql = ">=3.4.0,<4.0.0"
 gunicorn = ">=20.1,<26.0"
-humanize = "^4.6.0"
-numpy = "^2.2.0"
-platzky = "2.0.0a2"
-pydantic = "^2.12.0"
-pysupercluster-problematy = "^0.7.8"
-PyYAML = "^6.0"
-scipy = "^1.15.1"
-spectree = "^2.0.1"
+humanize = ">=4.6.0,<5.0.0"
+numpy = ">=2.2.0,<3.0.0"
+platzky = "2.0.0a8"
+pydantic = ">=2.12.0,<3.0.0"
+pysupercluster-problematy = ">=0.7.8,<0.8.0"
+PyYAML = ">=6.0,<7.0"
+scipy = ">=1.15.1,<2.0.0"
+spectree = ">=2.0.1,<3.0.0"
 
 [package.extras]
 docs = ["myst-parser (>=4.0.0,<5.0.0)", "sphinx (>=8.0.0,<9.0.0)", "sphinx-rtd-theme (>=3.0.0,<4.0.0)"]
-
-[package.source]
-type = "directory"
-url = "../../goodmap"
 
 [[package]]
 name = "google-api-core"
@@ -1836,14 +1834,14 @@ files = [
 
 [[package]]
 name = "platzky"
-version = "2.0.0a2"
+version = "2.0.0a8"
 description = "Not only blog engine"
 optional = false
 python-versions = "<4.0,>=3.10"
 groups = ["main"]
 files = [
-    {file = "platzky-2.0.0a2-py3-none-any.whl", hash = "sha256:39da542c56466152fb202cacc564b45a4daf66de5d6b0c44f0b4060fb2484a96"},
-    {file = "platzky-2.0.0a2.tar.gz", hash = "sha256:5a09a424cf74f7678f3de7382cc09ffeaf98ce7a0bdd4e949a78f025ba1f2da8"},
+    {file = "platzky-2.0.0a8-py3-none-any.whl", hash = "sha256:0b391494d4d2abb8da89aa24b316c363822e093c6b9ed50236e0f0d39c1959a2"},
+    {file = "platzky-2.0.0a8.tar.gz", hash = "sha256:4064b5d00e7f094dee6af9e1f20f971d18d8910b9684b77bf1ca9ece19b49191"},
 ]
 
 [package.dependencies]
@@ -1853,7 +1851,7 @@ Flask = ">=3.1.0,<4.0.0"
 Flask-Babel = ">=4.0.0,<5.0.0"
 Flask-Minify = ">=0.50,<0.51"
 Flask-WTF = ">=1.2.1,<2.0.0"
-google-cloud-storage = ">=2.5.0,<3.0.0"
+google-cloud-storage = ">=2.5,<4.0"
 gql = ">=3.4,<5.0"
 humanize = ">=4.9.0,<5.0.0"
 puremagic = ">=1.30,<2.0"
@@ -3334,4 +3332,4 @@ propcache = ">=0.2.1"
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.14"
-content-hash = "e120f79e0b311376164af2df473fac0d093d9e25fda6d93f1912583c67122e82"
+content-hash = "e917756352e962f5cb93fa7647be06ea158b4f34157097be3252d85768ef63ca"

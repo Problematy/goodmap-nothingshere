@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.3](https://github.com/Problematy/goodmap-nothingshere/compare/v0.1.2...v0.1.3) (2026-06-30)
+
+
+### Bug Fixes
+
+* change python version ti proper one ([#11](https://github.com/Problematy/goodmap-nothingshere/issues/11)) ([78e8000](https://github.com/Problematy/goodmap-nothingshere/commit/78e80007d6870ae4fdd0ca285c79c13685c55d02))
+
 ## [0.1.2](https://github.com/Problematy/goodmap-nothingshere/compare/v0.1.1...v0.1.2) (2026-06-30)
 
 

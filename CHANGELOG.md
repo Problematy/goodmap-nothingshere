@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.5](https://github.com/Problematy/goodmap-nothingshere/compare/v0.1.4...v0.1.5) (2026-07-06)
+
+
+### Bug Fixes
+
+* added needed files to package ([#21](https://github.com/Problematy/goodmap-nothingshere/issues/21)) ([dd6bd44](https://github.com/Problematy/goodmap-nothingshere/commit/dd6bd44b199557422b4ead8e23684d84e8334327))
+
 ## [0.1.4](https://github.com/Problematy/goodmap-nothingshere/compare/v0.1.3...v0.1.4) (2026-07-06)
 
 

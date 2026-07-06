@@ -26,9 +26,16 @@ The `name` must match the entry-point key declared in `pyproject.toml`:
 
 ## Development
 
-This plugin extends [`PluginBase`](https://platzky.readthedocs.io/en/latest/plugins.html).
-To add a specific capability, subclass one of:
+This is a goodmap frontend plugin: the backend class subclasses a goodmap capability
+base, and the frontend ships a React component per capability via Webpack Module
+Federation. A plugin declares its capabilities by subclassing one or more of:
 
-- `NotifierPluginBase` — send notifications (implement `notify`)
-- `AttachmentNotifierPluginBase` — notifications with file attachments
-- `ContentTransformerPluginBase` — transform post/page content and register shortcodes
+- `goodmap.plugin.MapOverlayPluginBase` — component mounted once over the map
+  (exposed as `./MapOverlay`); this plugin's capability
+- `goodmap.plugin.MarkerFieldPluginBase` — component rendering/wrapping a marker-popup
+  field (exposed as `./MarkerField`)
+
+goodmap derives each capability's Module Federation module from the base class name,
+so the webpack `exposes` keys must match, and the webpack container `name` must equal
+the entry-point key (`nothingshere`). See goodmap's `examples/plugins/silly-gif` for
+the reference layout.

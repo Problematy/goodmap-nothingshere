@@ -1028,14 +1028,14 @@ files = [
 
 [[package]]
 name = "goodmap"
-version = "2.0.0a1"
+version = "2.0.0a2"
 description = "Map engine to serve all the people :)"
 optional = false
 python-versions = "<4.0,>=3.10"
 groups = ["main"]
 files = [
-    {file = "goodmap-2.0.0a1-py3-none-any.whl", hash = "sha256:7a493905e424d9d72687a1caab645a2d6febc4c32ae4a9cc931fe5def0c857f7"},
-    {file = "goodmap-2.0.0a1.tar.gz", hash = "sha256:e7fa6580d9dbc00727cafae26cf4494c077924404fc35403c76b4787a56525b8"},
+    {file = "goodmap-2.0.0a2-py3-none-any.whl", hash = "sha256:b5506b9d2ef3b39068cb5195d147339663e2800e5aebe6d486c926601f9d185a"},
+    {file = "goodmap-2.0.0a2.tar.gz", hash = "sha256:9de59d8bd04e06450789e37432242ebf112a570b61a1e9a61433f6e6eab89020"},
 ]
 
 [package.dependencies]
@@ -1049,7 +1049,7 @@ gql = ">=3.4.0,<4.0.0"
 gunicorn = ">=20.1,<26.0"
 humanize = ">=4.6.0,<5.0.0"
 numpy = ">=2.2.0,<3.0.0"
-platzky = "2.0.0a8"
+platzky = "2.0.0a10"
 pydantic = ">=2.12.0,<3.0.0"
 pysupercluster-problematy = ">=0.7.8,<0.8.0"
 PyYAML = ">=6.0,<7.0"
@@ -1840,14 +1840,14 @@ files = [
 
 [[package]]
 name = "platzky"
-version = "2.0.0a8"
+version = "2.0.0a10"
 description = "Not only blog engine"
 optional = false
 python-versions = "<4.0,>=3.10"
 groups = ["main"]
 files = [
-    {file = "platzky-2.0.0a8-py3-none-any.whl", hash = "sha256:0b391494d4d2abb8da89aa24b316c363822e093c6b9ed50236e0f0d39c1959a2"},
-    {file = "platzky-2.0.0a8.tar.gz", hash = "sha256:4064b5d00e7f094dee6af9e1f20f971d18d8910b9684b77bf1ca9ece19b49191"},
+    {file = "platzky-2.0.0a10-py3-none-any.whl", hash = "sha256:8a5ee8f4a69c256d3c293a3b7d4ed5e08057fc1ea6ca96e07474a1db192f894a"},
+    {file = "platzky-2.0.0a10.tar.gz", hash = "sha256:d9d3fe1c5920498928fce9d10b6557b3e4b100a13ffd0890c1d4db85c2a6b8d5"},
 ]
 
 [package.dependencies]
@@ -3338,4 +3338,4 @@ propcache = ">=0.2.1"
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "dd87eab048b0a0dbb88447695daeb3edf3ec22322d68cceea68cb8e6f0a1454b"
+content-hash = "f766ed7a46bd9246ab50efb484db24b4c954d3739ee7c6e97b0f255205fbe8bd"

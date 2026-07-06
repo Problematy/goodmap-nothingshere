@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "goodmap_nothingshere"
-version = "0.1.3"
+version = "0.1.4"
 description = "goodmap plugin that shows popup if no point is visible in a view"
 authors = ["krzysztof.kolodzinski@problematy.pl"]
 license = "MIT"

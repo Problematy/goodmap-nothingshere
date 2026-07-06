@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.4](https://github.com/Problematy/goodmap-nothingshere/compare/v0.1.3...v0.1.4) (2026-07-06)
+
+
+### Bug Fixes
+
+* aligned to frontend plugins desing ([#19](https://github.com/Problematy/goodmap-nothingshere/issues/19)) ([9ca1501](https://github.com/Problematy/goodmap-nothingshere/commit/9ca15013818cc967eec5e27136c1685b6eb021ae))
+
 ## [0.1.3](https://github.com/Problematy/goodmap-nothingshere/compare/v0.1.2...v0.1.3) (2026-06-30)
 
 

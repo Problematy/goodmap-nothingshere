@@ -9,7 +9,7 @@ description = "goodmap plugin that shows popup if no point is visible in a view"
 authors = ["krzysztof.kolodzinski@problematy.pl"]
 license = "MIT"
 readme = "README.md"
-include = ["goodmap_nothingshere/locale/**"]
+include = ["goodmap_nothingshere/locale/**", "goodmap_nothingshere/static/**"]
 
 [tool.poetry.dependencies]
 python = "^3.12"

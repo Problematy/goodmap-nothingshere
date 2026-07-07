@@ -19,7 +19,10 @@ export default function NothingsherePlugin({ config, isMapLoading = false }) {
         if (!container) return undefined;
 
         const check = () => {
-            const markers = container.querySelectorAll('.leaflet-marker-icon');
+            // Exclude the "your location" marker (goodmap's own Marker, icon className
+            // "location-icon") - it's always present once geolocation is granted and
+            // isn't a data point, so counting it would mask a genuinely empty view.
+            const markers = container.querySelectorAll('.leaflet-marker-icon:not(.location-icon)');
             setNoMarkers(markers.length === 0);
         };
 

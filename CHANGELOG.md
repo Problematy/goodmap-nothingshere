@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.7](https://github.com/Problematy/goodmap-nothingshere/compare/v0.1.6...v0.1.7) (2026-07-07)
+
+
+### Bug Fixes
+
+* build should produce production version now ([#25](https://github.com/Problematy/goodmap-nothingshere/issues/25)) ([1d833a4](https://github.com/Problematy/goodmap-nothingshere/commit/1d833a49f415639e2ee6c212d12e97c5cad5b4ea))
+
 ## [0.1.6](https://github.com/Problematy/goodmap-nothingshere/compare/v0.1.5...v0.1.6) (2026-07-07)
 
 

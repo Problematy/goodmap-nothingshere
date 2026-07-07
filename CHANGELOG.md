@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.8](https://github.com/Problematy/goodmap-nothingshere/compare/v0.1.7...v0.1.8) (2026-07-07)
+
+
+### Bug Fixes
+
+* aling react to host app version ([#27](https://github.com/Problematy/goodmap-nothingshere/issues/27)) ([800d999](https://github.com/Problematy/goodmap-nothingshere/commit/800d999e9b1e535a1128d14a191056b9ed667986))
+
 ## [0.1.7](https://github.com/Problematy/goodmap-nothingshere/compare/v0.1.6...v0.1.7) (2026-07-07)
 
 

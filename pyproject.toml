@@ -9,9 +9,13 @@ description = "goodmap plugin that shows popup if no point is visible in a view"
 authors = ["krzysztof.kolodzinski@problematy.pl"]
 license = "MIT"
 readme = "README.md"
+# Ship the gitignored build outputs (compiled frontend bundle + translations).
+# The trailing glob MUST be "**/*", not "**": under Python 3.12 (used by the release
+# CI) pathlib's "**" matches only directories, so "static/**" matched no files and the
+# 0.1.5 wheel shipped without the bundle. "**/*" matches the files on every version.
 include = [
-    { path = "goodmap_nothingshere/locale/**", format = ["sdist", "wheel"] },
-    { path = "goodmap_nothingshere/static/**", format = ["sdist", "wheel"] },
+    { path = "goodmap_nothingshere/locale/**/*", format = ["sdist", "wheel"] },
+    { path = "goodmap_nothingshere/static/**/*", format = ["sdist", "wheel"] },
 ]
 
 [tool.poetry.dependencies]

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.9](https://github.com/Problematy/goodmap-nothingshere/compare/v0.1.8...v0.1.9) (2026-07-07)
+
+
+### Bug Fixes
+
+* ignore location marker while makrer counting ([#29](https://github.com/Problematy/goodmap-nothingshere/issues/29)) ([7ddf7bb](https://github.com/Problematy/goodmap-nothingshere/commit/7ddf7bb03758387b3dc17c0cd86628dac4ba1b1f))
+
 ## [0.1.8](https://github.com/Problematy/goodmap-nothingshere/compare/v0.1.7...v0.1.8) (2026-07-07)
 
 

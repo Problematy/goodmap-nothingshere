@@ -1013,14 +1013,14 @@ files = [
 
 [[package]]
 name = "goodmap"
-version = "2.0.0a2"
+version = "2.0.0a5"
 description = "Map engine to serve all the people :)"
 optional = false
 python-versions = "<4.0,>=3.10"
 groups = ["main"]
 files = [
-    {file = "goodmap-2.0.0a2-py3-none-any.whl", hash = "sha256:b5506b9d2ef3b39068cb5195d147339663e2800e5aebe6d486c926601f9d185a"},
-    {file = "goodmap-2.0.0a2.tar.gz", hash = "sha256:9de59d8bd04e06450789e37432242ebf112a570b61a1e9a61433f6e6eab89020"},
+    {file = "goodmap-2.0.0a5-py3-none-any.whl", hash = "sha256:2f1b0ba09777d3c382d7ec2a63e4f836014dc06ebb17380ea56e37e129379848"},
+    {file = "goodmap-2.0.0a5.tar.gz", hash = "sha256:0518cf6c58c1281f7599782ab023ea4c74213c1f967890813bd861ebcbb2216c"},
 ]
 
 [package.dependencies]

@@ -7,9 +7,18 @@ const DEFAULT_MESSAGE = 'No points visible in this area.';
 // for. A deployment can override/extend it with config.closeLabels, same shape as messages.
 const DEFAULT_CLOSE_LABELS = { en: 'Close', pl: 'Zamknij' };
 
-// Once dismissed the overlay stays hidden for the rest of the browser tab's session, so
-// it can't keep covering locations the user is trying to reach.
-const DISMISSED_KEY = 'nothingshere-dismissed';
+// Closing hides the overlay for a while - long enough to explore the area that the popup
+// was covering, short enough that the message comes back for a later, unrelated search.
+// Tunable per deployment with config.dismissMinutes.
+const DEFAULT_DISMISS_MINUTES = 15;
+
+// Holds the epoch-ms deadline the dismissal expires at (not a boolean), so a page reload
+// inside the window keeps the overlay hidden while a later one shows it again.
+const DISMISSED_UNTIL_KEY = 'nothingshere-dismissed-until';
+
+// setTimeout stores its delay in a signed 32-bit int; anything larger overflows and fires
+// straight away, which would defeat a long configured window.
+const MAX_TIMEOUT_MS = 2147483647;
 
 function resolveLocalized(byLang, fallback) {
     const lang = globalThis.APP_LANG;
@@ -27,27 +36,44 @@ function resolveCloseLabel(config) {
     return resolveLocalized(labels, DEFAULT_CLOSE_LABELS.en);
 }
 
+function resolveDismissMs(config) {
+    const minutes = config && config.dismissMinutes;
+    const valid = typeof minutes === 'number' && Number.isFinite(minutes) && minutes > 0;
+    return (valid ? minutes : DEFAULT_DISMISS_MINUTES) * 60 * 1000;
+}
+
 // sessionStorage can throw outright (private mode, site data blocked). The overlay has to
-// work there too - it just won't remember the dismissal past a reload.
-function readDismissed() {
+// work there too - the dismissal then only lasts until the page is reloaded.
+function readDismissedUntil() {
     try {
-        return globalThis.sessionStorage.getItem(DISMISSED_KEY) === '1';
+        // Number('') is 0 and Number(null) is 0, so a missing or junk value reads as
+        // "not dismissed" - including the plain flag written by earlier versions.
+        const until = Number(globalThis.sessionStorage.getItem(DISMISSED_UNTIL_KEY));
+        return Number.isFinite(until) ? until : 0;
     } catch {
-        return false;
+        return 0;
     }
 }
 
-function persistDismissed() {
+function writeDismissedUntil(until) {
     try {
-        globalThis.sessionStorage.setItem(DISMISSED_KEY, '1');
+        globalThis.sessionStorage.setItem(DISMISSED_UNTIL_KEY, String(until));
     } catch {
         // Nothing to do - the dismissal still holds for this page view.
     }
 }
 
+function clearDismissedUntil() {
+    try {
+        globalThis.sessionStorage.removeItem(DISMISSED_UNTIL_KEY);
+    } catch {
+        // Nothing to do - the in-memory state has already been reset.
+    }
+}
+
 export default function NothingsherePlugin({ config, isMapLoading = false }) {
     const [noMarkers, setNoMarkers] = useState(false);
-    const [dismissed, setDismissed] = useState(readDismissed);
+    const [dismissedUntil, setDismissedUntil] = useState(readDismissedUntil);
 
     useEffect(() => {
         const container = document.querySelector('.leaflet-container');
@@ -68,9 +94,22 @@ export default function NothingsherePlugin({ config, isMapLoading = false }) {
         return () => observer.disconnect();
     }, []);
 
+    // Bring the overlay back when the window runs out, without waiting for a reload.
+    useEffect(() => {
+        const remaining = dismissedUntil - Date.now();
+        if (remaining <= 0 || remaining > MAX_TIMEOUT_MS) return undefined;
+
+        const timer = setTimeout(() => {
+            clearDismissedUntil();
+            setDismissedUntil(0);
+        }, remaining);
+
+        return () => clearTimeout(timer);
+    }, [dismissedUntil]);
+
     // Stay hidden until the map's data has loaded, so we don't flash the message
     // during the initial fetch (or while a lazy-load refetch is in flight).
-    if (isMapLoading || !noMarkers || dismissed) return null;
+    if (isMapLoading || !noMarkers || dismissedUntil > Date.now()) return null;
 
     // Match the page's top header bar: both follow the site's primary_color
     // (falls back to Bootstrap's light surface). Text and links use the accent color.
@@ -78,8 +117,9 @@ export default function NothingsherePlugin({ config, isMapLoading = false }) {
     const color = globalThis.SECONDARY_COLOR || 'black';
 
     const dismiss = () => {
-        persistDismissed();
-        setDismissed(true);
+        const until = Date.now() + resolveDismissMs(config);
+        writeDismissedUntil(until);
+        setDismissedUntil(until);
     };
 
     return (

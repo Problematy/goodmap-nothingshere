@@ -3,16 +3,51 @@ import React, { useEffect, useState } from 'react';
 // Shown only if the deployment didn't configure a message for the active language.
 const DEFAULT_MESSAGE = 'No points visible in this area.';
 
+// Accessible name for the close button, for the languages this plugin ships catalogues
+// for. A deployment can override/extend it with config.closeLabels, same shape as messages.
+const DEFAULT_CLOSE_LABELS = { en: 'Close', pl: 'Zamknij' };
+
+// Once dismissed the overlay stays hidden for the rest of the browser tab's session, so
+// it can't keep covering locations the user is trying to reach.
+const DISMISSED_KEY = 'nothingshere-dismissed';
+
+function resolveLocalized(byLang, fallback) {
+    const lang = globalThis.APP_LANG;
+    return byLang[lang] || byLang.en || fallback;
+}
+
 // config.messages is keyed by language code, e.g. { pl: "...", en: "..." }. A message
 // may contain HTML (e.g. an <a> link to a partner page); the link is part of the message.
 function resolveMessage(config) {
-    const messages = (config && config.messages) || {};
-    const lang = globalThis.APP_LANG;
-    return messages[lang] || messages.en || DEFAULT_MESSAGE;
+    return resolveLocalized((config && config.messages) || {}, DEFAULT_MESSAGE);
+}
+
+function resolveCloseLabel(config) {
+    const labels = { ...DEFAULT_CLOSE_LABELS, ...((config && config.closeLabels) || {}) };
+    return resolveLocalized(labels, DEFAULT_CLOSE_LABELS.en);
+}
+
+// sessionStorage can throw outright (private mode, site data blocked). The overlay has to
+// work there too - it just won't remember the dismissal past a reload.
+function readDismissed() {
+    try {
+        return globalThis.sessionStorage.getItem(DISMISSED_KEY) === '1';
+    } catch {
+        return false;
+    }
+}
+
+function persistDismissed() {
+    try {
+        globalThis.sessionStorage.setItem(DISMISSED_KEY, '1');
+    } catch {
+        // Nothing to do - the dismissal still holds for this page view.
+    }
 }
 
 export default function NothingsherePlugin({ config, isMapLoading = false }) {
     const [noMarkers, setNoMarkers] = useState(false);
+    const [dismissed, setDismissed] = useState(readDismissed);
 
     useEffect(() => {
         const container = document.querySelector('.leaflet-container');
@@ -35,12 +70,17 @@ export default function NothingsherePlugin({ config, isMapLoading = false }) {
 
     // Stay hidden until the map's data has loaded, so we don't flash the message
     // during the initial fetch (or while a lazy-load refetch is in flight).
-    if (isMapLoading || !noMarkers) return null;
+    if (isMapLoading || !noMarkers || dismissed) return null;
 
     // Match the page's top header bar: both follow the site's primary_color
     // (falls back to Bootstrap's light surface). Text and links use the accent color.
     const background = globalThis.PRIMARY_COLOR || '#f8f9fa';
     const color = globalThis.SECONDARY_COLOR || 'black';
+
+    const dismiss = () => {
+        persistDismissed();
+        setDismissed(true);
+    };
 
     return (
         <div
@@ -59,7 +99,8 @@ export default function NothingsherePlugin({ config, isMapLoading = false }) {
                 textAlign: 'center',
                 background,
                 color,
-                padding: '1.6rem',
+                // Extra top padding keeps the message clear of the close button.
+                padding: '2.6rem 1.6rem 1.6rem',
                 borderRadius: '0.5rem',
                 fontSize: '1.1rem',
                 lineHeight: 1.4,
@@ -71,6 +112,34 @@ export default function NothingsherePlugin({ config, isMapLoading = false }) {
         >
             {/* Links adopt the message text color instead of the browser default blue. */}
             <style>{`.nothingshere-overlay a { color: inherit; }`}</style>
+            <button
+                type="button"
+                className="nothingshere-overlay-close"
+                aria-label={resolveCloseLabel(config)}
+                onClick={dismiss}
+                style={{
+                    position: 'absolute',
+                    top: '0.35rem',
+                    right: '0.35rem',
+                    width: '2.25rem',
+                    height: '2.25rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    border: 'none',
+                    borderRadius: '50%',
+                    background: 'transparent',
+                    color: 'inherit',
+                    // The glyph is decorative; the accessible name comes from aria-label.
+                    font: 'inherit',
+                    fontSize: '1.5rem',
+                    lineHeight: 1,
+                    cursor: 'pointer',
+                    padding: 0,
+                }}
+            >
+                <span aria-hidden="true">&times;</span>
+            </button>
             {/* config is authored by the deployment admin (trusted), so HTML is allowed. */}
             <span dangerouslySetInnerHTML={{ __html: resolveMessage(config) }} />
         </div>

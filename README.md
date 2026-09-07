@@ -41,7 +41,7 @@ tuned from the database without rebuilding the plugin. All keys are optional:
     "config": {
         "messages": {
             "en": "No points here yet. <a href=\"/add\">Add one?</a>",
-            "pl": "Brak punkt\u00f3w w tym miejscu."
+            "pl": "Brak punktów tym miejscu."
         },
         "dismissMinutes": 30
     }

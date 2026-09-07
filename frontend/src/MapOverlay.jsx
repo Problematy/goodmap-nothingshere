@@ -9,12 +9,8 @@ const DEFAULT_CLOSE_LABELS = { en: 'Close', pl: 'Zamknij' };
 
 // Closing hides the overlay for a while - long enough to explore the area that the popup
 // was covering, short enough that the message comes back for a later, unrelated search.
-// Tunable per deployment with config.dismissMinutes.
+// Tunable per deployment with config.dismissMinutes (read from the database plugin config).
 const DEFAULT_DISMISS_MINUTES = 15;
-
-// Holds the epoch-ms deadline the dismissal expires at (not a boolean), so a page reload
-// inside the window keeps the overlay hidden while a later one shows it again.
-const DISMISSED_UNTIL_KEY = 'nothingshere-dismissed-until';
 
 // setTimeout stores its delay in a signed 32-bit int; anything larger overflows and fires
 // straight away, which would defeat a long configured window.
@@ -42,38 +38,12 @@ function resolveDismissMs(config) {
     return (valid ? minutes : DEFAULT_DISMISS_MINUTES) * 60 * 1000;
 }
 
-// sessionStorage can throw outright (private mode, site data blocked). The overlay has to
-// work there too - the dismissal then only lasts until the page is reloaded.
-function readDismissedUntil() {
-    try {
-        // Number('') is 0 and Number(null) is 0, so a missing or junk value reads as
-        // "not dismissed" - including the plain flag written by earlier versions.
-        const until = Number(globalThis.sessionStorage.getItem(DISMISSED_UNTIL_KEY));
-        return Number.isFinite(until) ? until : 0;
-    } catch {
-        return 0;
-    }
-}
-
-function writeDismissedUntil(until) {
-    try {
-        globalThis.sessionStorage.setItem(DISMISSED_UNTIL_KEY, String(until));
-    } catch {
-        // Nothing to do - the dismissal still holds for this page view.
-    }
-}
-
-function clearDismissedUntil() {
-    try {
-        globalThis.sessionStorage.removeItem(DISMISSED_UNTIL_KEY);
-    } catch {
-        // Nothing to do - the in-memory state has already been reset.
-    }
-}
-
 export default function NothingsherePlugin({ config, isMapLoading = false }) {
     const [noMarkers, setNoMarkers] = useState(false);
-    const [dismissedUntil, setDismissedUntil] = useState(readDismissedUntil);
+    // Deliberately in-memory only: a reload is itself a fresh look at the map, so the
+    // overlay comes back with it. Storing an epoch-ms deadline rather than a boolean keeps
+    // the expiry timer below immune to re-renders that hand us a new config object.
+    const [dismissedUntil, setDismissedUntil] = useState(0);
 
     useEffect(() => {
         const container = document.querySelector('.leaflet-container');
@@ -99,10 +69,7 @@ export default function NothingsherePlugin({ config, isMapLoading = false }) {
         const remaining = dismissedUntil - Date.now();
         if (remaining <= 0 || remaining > MAX_TIMEOUT_MS) return undefined;
 
-        const timer = setTimeout(() => {
-            clearDismissedUntil();
-            setDismissedUntil(0);
-        }, remaining);
+        const timer = setTimeout(() => setDismissedUntil(0), remaining);
 
         return () => clearTimeout(timer);
     }, [dismissedUntil]);
@@ -116,11 +83,7 @@ export default function NothingsherePlugin({ config, isMapLoading = false }) {
     const background = globalThis.PRIMARY_COLOR || '#f8f9fa';
     const color = globalThis.SECONDARY_COLOR || 'black';
 
-    const dismiss = () => {
-        const until = Date.now() + resolveDismissMs(config);
-        writeDismissedUntil(until);
-        setDismissedUntil(until);
-    };
+    const dismiss = () => setDismissedUntil(Date.now() + resolveDismissMs(config));
 
     return (
         <div

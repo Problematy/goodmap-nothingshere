@@ -24,6 +24,30 @@ The `name` must match the entry-point key declared in `pyproject.toml`:
 }
 ```
 
+## Configuration
+
+Everything under `config` is passed straight to the frontend component, so the popup is
+tuned from the database without rebuilding the plugin. All keys are optional:
+
+| Key | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `messages` | `{ <lang>: string }` | built-in English text | Popup text per language code, picked with the site's active language and falling back to `en`. May contain HTML (e.g. a link). |
+| `closeLabels` | `{ <lang>: string }` | `{ "en": "Close", "pl": "Zamknij" }` | Accessible name of the close button, per language. |
+| `dismissMinutes` | number | `15` | How long the popup stays hidden after the user closes it. A page reload also brings it back. |
+
+```json
+{
+    "name": "nothingshere",
+    "config": {
+        "messages": {
+            "en": "No points here yet. <a href=\"/add\">Add one?</a>",
+            "pl": "Brak punkt\u00f3w w tym miejscu."
+        },
+        "dismissMinutes": 30
+    }
+}
+```
+
 ## Development
 
 This is a goodmap frontend plugin: the backend class subclasses a goodmap capability

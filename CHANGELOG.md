@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/Problematy/goodmap-nothingshere/compare/v0.1.9...v0.2.0) (2026-09-07)
+
+
+### Features
+
+* close button added for popup ([#40](https://github.com/Problematy/goodmap-nothingshere/issues/40)) ([5488759](https://github.com/Problematy/goodmap-nothingshere/commit/5488759cee216d7f6e390fa9b97ecbb87759940b))
+
 ## [0.1.9](https://github.com/Problematy/goodmap-nothingshere/compare/v0.1.8...v0.1.9) (2026-07-07)
 
 
